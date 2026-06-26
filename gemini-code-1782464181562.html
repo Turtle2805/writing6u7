@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ms Lê Hằng English - Chuyên Đề Phổ Thông Học Đường</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Quicksand:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #8854C0;
+            --secondary-bg: #FDCB6E;
+            --accent-bg: #00C9A7;
+            --correct: #00D26A;
+            --wrong: #FF4757;
+            --text-color: #2d3436;
+        }
+
+        * { box-sizing: border-box; font-family: 'Nunito', 'Quicksand', sans-serif; }
+
+        body {
+            margin: 0;
+            padding: 15px;
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #ff7675);
+            background-size: 400% 400%;
+            animation: loangMauChuyểnĐộng 14s ease infinite;
+            min-height: 100vh;
+            color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes loangMauChuyểnĐộng {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Họa tiết hoạt hình trường học lơ lửng độc lập trên nền ứng dụng */
+        .bg-school-floating {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 100 100"><text y="30" x="10" font-size="22">🎒</text><text y="85" x="70" font-size="24">🏃</text><text y="40" x="75" font-size="22">🎨</text><text y="90" x="15" font-size="24">🌱</text></svg>');
+            background-size: 150px 150px;
+            opacity: 0.32;
+            z-index: 0;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            animation: bayBongHọaTiet 26s linear infinite;
+        }
+
+        @keyframes bayBongHọaTiet {
+            0% { background-position: 0px 0px; }
+            100% { background-position: 150px 300px; }
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 3px dashed #dfe6e9;
+            padding-bottom: 15px;
+        }
+
+        .badge-teacher {
+            font-size: 1em;
+            color: #6c5ce7;
+            font-weight: 800;
+            background: #f1f2f6;
+            padding: 6px 18px;
+            border-radius: 14px;
+            display: inline-block;
+            border: 2px dashed #a29bfe;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border: 3px dashed #f59f00;
+            padding: 18px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            font-size: 1em;
+            color: #856404;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(245, 159, 0, 0.08);
+        }
+
+        .exercise-header {
+            background: #e8f5e9;
+            color: #1b5e20;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-weight: 800;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            border-left: 6px solid #2e7d32;
+            font-size: 1.15em;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 22px;
+            margin-bottom: 22px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            border: 3px solid #f1f2f6;
+            transition: all 0.3s ease;
+        }
+        .card:hover { border-color: #a29bfe; transform: translateY(-2px); }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #2d3436;
+            line-height: 1.5;
+        }
+
+        .options-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .btn-opt {
+            padding: 15px 18px;
+            border: none;
+            border-radius: 18px;
+            font-size: 1.02em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 0 #b2bec3;
+            background: #f1f2f6;
+            text-align: left;
+            color: #2d3436;
+            line-height: 1.4;
+        }
+        .btn-opt:hover {
+            transform: scale(1.015);
+            background: #ffeaa7;
+            box-shadow: 0 5px 0 #fdcb6e;
+        }
+        .btn-opt:active { transform: translateY(5px); box-shadow: none !important; }
+
+        .btn-opt.correct {
+            background: var(--correct) !important;
+            color: white !important;
+            box-shadow: 0 5px 0 #00b894 !important;
+        }
+        .btn-opt.wrong {
+            background: var(--wrong) !important;
+            color: white !important;
+            box-shadow: 0 5px 0 #d63031 !important;
+            animation: rungGiatCơHen 0.4s ease;
+        }
+
+        @keyframes rungGiatCơHen {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 15px;
+            padding: 18px;
+            background: #f8f9fa;
+            border-left: 6px solid #00b894;
+            border-radius: 14px;
+            font-size: 0.98em;
+            line-height: 1.7;
+            color: #2d3436;
+            animation: haCanhMượt 0.4s ease;
+        }
+
+        @keyframes haCanhMượt { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .sticky-submit-bar {
+            position: sticky;
+            bottom: 15px;
+            background: rgba(255,255,255,0.96);
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.06);
+            z-index: 10;
+            margin-top: 40px;
+        }
+
+        .btn-submit-all {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.3em;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #4834d4;
+            transition: all 0.2s;
+        }
+        .btn-submit-all:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-submit-all:active { transform: translateY(6px); box-shadow: none; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(6px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-box {
+            background: white;
+            padding: 35px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            animation: modalHienRa 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalHienRa { 0% { transform: scale(0.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .modal-box h2 { font-size: 2.2em; color: #6c5ce7; margin-top: 0; }
+        .modal-box p { font-size: 1.15em; font-weight: 700; color: #353b48; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="bg-school-floating"></div>
+
+<div class="container">
+    <header>
+        <div class="badge-teacher">Giáo viên tạo: Ms Lê Hằng English</div>
+    </header>
+
+    <div class="alert-box">
+        ⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️<br><br>
+        Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.<br>
+        Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!<br>
+        <strong>* Kéo tới đâu, làm tới đó! *</strong>
+    </div>
+
+    <div id="quiz-load-zone"></div>
+
+    <div class="sticky-submit-bar">
+        <button class="btn-submit-all" onclick="nopBaiVaChamDiem()">Nộp Bài Xem Tổng Kết Điểm 🌟</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="result-overlay">
+    <div class="modal-box">
+        <h2>Kết Quả Bài Làm Của Con</h2>
+        <p id="txt-diem" style="font-size: 1.6em; color: #6c5ce7; font-weight: 800;"></p>
+        <p id="txt-nhan-xet"></p>
+        <button class="btn-submit-all" onclick="location.reload()" style="font-size: 1.1em; padding: 12px; margin-top: 15px;">LÀM LẠI BÀI TẬP</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+    // Cơ sở dữ liệu 100% trọn vẹn từ Exercise 16 tới Exercise 21
+    const questionsRawData = [
+        // Exercise 16
+        {ex: "Exercise 16: Word Reordering", q: "1. They / gifted students / are/ in / school / our /.", opts: ["They are gifted students in our school.", "They gifted students are in our school.", "In our school they gifted students are.", "They are students gifted in our school."], ans: "They are gifted students in our school.", tag: "Họ là những học sinh năng khiếu ở trường của chúng tôi.", hint: "Cấu trúc khẳng định: Chủ ngữ (They) + be (are) + cụm danh từ (gifted students) + cụm trạng ngữ nơi chốn (in our school)."},
+        {ex: "Exercise 16: Word Reordering", q: "2. maths / I / and information technology / like /.", opts: ["I like maths and information technology.", "I maths and information technology like.", "Maths and information technology I like.", "I like information technology and maths."], ans: "I like maths and information technology.", tag: "Tôi thích môn toán và công nghệ thông tin.", hint: "Cấu trúc cơ bản: Chủ ngữ (I) + Động từ (like) + Hệ thống tân ngữ liên kết bằng từ nối 'and'."},
+        {ex: "Exercise 16: Word Reordering", q: "3. you / Can / me / tell / why / your school / love / you /?", opts: ["Can you tell me why you love your school?", "Can you tell me why do you love your school?", "Why you love your school can you tell me?", "Can you tell why do love you your school?"], ans: "Can you tell me why you love your school?", tag: "Bạn có thể nói cho tôi biết tại sao bạn yêu trường của mình không?", hint: "Câu hỏi bắt đầu bằng động từ khuyết thiếu 'Can you tell me'. Mệnh đề danh ngữ đi sau 'why' giữ nguyên trật tự câu khẳng định (S + V)."},
+        {ex: "Exercise 16: Word Reordering", q: "4. science lab / in / works / my school’s / She /.", opts: ["She works in my school's science lab.", "She works my school's in science lab.", "My school's science lab works in she.", "She in my school's science lab works."], ans: "She works in my school's science lab.", tag: "Cô ấy làm việc trong phòng thí nghiệm khoa học của trường tôi.", hint: "Cấu trúc câu: Chủ ngữ (She) + Động từ (works) + Giới từ chỉ vị trí (in) + Cụm sở hữu cách làm rõ địa điểm (my school's science lab)."},
+        {ex: "Exercise 16: Word Reordering", q: "5. is / favorite / Mr. John / English / my / teacher /.", opts: ["Mr. John is my favorite English teacher.", "Mr. John is favorite my English teacher.", "My favorite English teacher Mr. John is.", "Mr. John English teacher is my favorite."], ans: "Mr. John is my favorite English teacher.", tag: "Thầy John là giáo viên tiếng Anh yêu thích của tôi.", hint: "Trật tự cụm danh từ làm tân ngữ bổ nghĩa: Tính từ sở hữu (my) + Tính từ miêu tả (favorite) + Danh từ đóng vai trò tính từ (English) + Danh từ trung tâm (teacher)."},
+        {ex: "Exercise 16: Word Reordering", q: "6. big / There / a / is / school / in / my / playground.", opts: ["There is a big playground in my school.", "There is a playground big in my school.", "In my school a big playground is there.", "There a big playground is in my school."], ans: "There is a big playground in my school.", tag: "Có một sân chơi lớn ở trong trường của tôi.", hint: "Cấu trúc chỉ sự tồn tại vật thể số ít: 'There is + a/an + tính từ + danh từ số ít + cụm giới từ nơi chốn'."},
+
+        // Exercise 17
+        {ex: "Exercise 17: Sentence Building", q: "7. Of all outdoor activities / my school, /I / like / gardening / best. (Viết câu hoàn chỉnh)", opts: ["Of all outdoor activities at my school, I like gardening the best.", "Of all outdoor activities in my school, I am like gardening best.", "Of all outdoor activities at my school, I like gardening best.", "Of all outdoor activities at my school, I like best gardening."], ans: "Of all outdoor activities at my school, I like gardening the best.", tag: "Trong số tất cả các hoạt động ngoài trời tại trường, tôi thích làm vườn nhất.", hint: "Giới từ đi liền cụm từ hoạt động của trường học là 'at my school'. Cấu trúc trạng từ nhấn mạnh mức độ cao nhất là 'like something the best'."},
+        {ex: "Exercise 17: Sentence Building", q: "8. I go / the school garden / my classmates / twice / week. (Viết câu hoàn chỉnh)", opts: ["I go to the school garden with my classmates twice a week.", "I go the school garden with my classmates twice week.", "I go to the school garden to my classmates twice a week.", "I go toward the school garden with my classmates twice per week."], ans: "I go to the school garden with my classmates twice a week.", tag: "Tôi đến vườn trường cùng với các bạn cùng lớp của mình hai lần một tuần.", hint: "Động từ di chuyển yêu cầu giới từ hướng tới: 'go to'. Đi cùng ai đó dùng giới từ liên kết 'with'. Cụm từ chỉ tần suất trạng ngữ: 'twice a week'."},
+        {ex: "Exercise 17: Sentence Building", q: "9. We / water / flowers / many kinds / vegetables / there. (Viết câu hoàn chỉnh)", opts: ["We water flowers and many kinds of vegetables there.", "We water flowers with many kinds of vegetables there.", "We water flowers and many kind of vegetables there.", "We water the flowers and many kinds vegetables there."], ans: "We water flowers and many kinds of vegetables there.", tag: "Chúng tôi tưới hoa và nhiều loại rau ở đó.", hint: "Cụm danh từ cố định chỉ sự đa dạng chủng loại: 'many kinds of + danh từ số nhiều'. Liên từ 'and' dùng kết nối hai tân ngữ song hành."},
+        {ex: "Exercise 17: Sentence Building", q: "10. We / remove / worms / insects / the plants / the garden. (Viết câu hoàn chỉnh)", opts: ["We remove worms and insects from the plants in the garden.", "We remove worms and insects off the plants at the garden.", "We remove worms and insects out of the plants in the garden.", "We remove worms and insects from the plants on the garden."], ans: "We remove worms and insects from the plants in the garden.", tag: "Chúng tôi loại bỏ sâu bọ và côn trùng khỏi các cây trồng trong vườn.", hint: "Cấu trúc động từ đi kèm giới từ tách rời hành động: 'remove something from somewhere' (loại bỏ cái gì khỏi đâu). Vị trí trong vườn dùng giới từ 'in the garden'."},
+        {ex: "Exercise 17: Sentence Building", q: "11. We / also / observe / development / plants / take notes / this. (Viết câu hoàn chỉnh)", opts: ["We also observe the development of plants and take notes of this.", "We also observe development of plants and take notes on this.", "We also observe the development of plants and take notes on this.", "We also observe the development of plants and take notes about this."], ans: "We also observe the development of plants and take notes of this.", tag: "Chúng tôi cũng quan sát sự phát triển của cây cối và ghi chép lại điều này.", hint: "Cần bổ sung mạo từ xác định 'the development' phối hợp giới từ 'of'. Cụm hành động đi kèm giới từ cố định theo đề bài gốc: 'take notes of this'."},
+        {ex: "Exercise 17: Sentence Building", q: "12. I think / gardening /fun / because / helps / learn / plants / and / practise/ my hand skills. (Viết câu hoàn chỉnh)", opts: ["I think gardening is fun because it helps me learn about plants and practise my hand skills.", "I think gardening fun because it helps me learn about plants and practise my hand skills.", "I think gardening is fun because helps me learn plants and practise my hand skills.", "I think gardening is fun because it helps me to learn plants and practise my hand skills."], ans: "I think gardening is fun because it helps me learn about plants and practise my hand skills.", tag: "Tôi nghĩ làm vườn rất vui vì nó giúp tôi tìm hiểu về cây cối và rèn luyện kỹ năng khéo tay của mình.", hint: "Bổ sung động từ 'is' sau danh động từ làm chủ ngữ 'gardening'. Sau liên từ chỉ nguyên nhân 'because' cần một mệnh đề đầy đủ cấu trúc: 'it helps me + V-nguyên thể'."},
+
+        // Exercise 18
+        {ex: "Exercise 18: Paragraph Sentence Reordering", q: "13. my neighbourhood / is / Thanh Binh Secondary School / a semi-boarding school / in /.", opts: ["Thanh Binh Secondary School is a semi-boarding school in my neighbourhood.", "Thanh Binh Secondary School in my neighbourhood is a semi-boarding school.", "A semi-boarding school is Thanh Binh Secondary School in my neighbourhood.", "In my neighbourhood Thanh Binh Secondary School is a semi-boarding school."], ans: "Thanh Binh Secondary School is a semi-boarding school in my neighbourhood.", tag: "Trường THCS Thanh Bình là một trường bán trú ở trong khu phố của tôi.", hint: "Xác định danh từ riêng làm chủ ngữ chính thức câu trần thuật: 'Thanh Binh Secondary School' + động từ liên kết 'is' + cụm danh từ phân loại kèm trạng ngữ."},
+        {ex: "Exercise 18: Paragraph Sentence Reordering", q: "14. In the past, / the school / learning resources / was lack / facilities and / of /.", opts: ["In the past, the school was lack of facilities and learning resources.", "In the past, the school was lack of learning resources and facilities.", "In the past, facilities and learning resources was lack of the school.", "The school was lack of facilities and learning resources in the past."], ans: "In the past, the school was lack of facilities and learning resources.", tag: "Trong quá khứ, ngôi trường này từng thiếu thốn cơ sở vật chất và tài liệu học tập.", hint: "Theo cấu trúc câu của học liệu gốc: Trạng ngữ chỉ thời gian quá khứ đặt ở đầu câu câu 'In the past' + Chủ ngữ + cụm từ cố định đóng vai trò vị ngữ 'was lack of + hệ danh từ kết hợp'."},
+        {ex: "Exercise 18: Paragraph Sentence Reordering", q: "15. Today, / well-equipped classrooms, / it has / and a / two modern computer rooms, / large library/.", opts: ["Today, it has well-equipped classrooms, two modern computer rooms, and a large library.", "Today, it has two modern computer rooms, well-equipped classrooms, and a large library.", "Today, well-equipped classrooms, two modern computer rooms, and a large library it has.", "It has well-equipped classrooms, two modern computer rooms, and a large library today."], ans: "Today, it has well-equipped classrooms, two modern computer rooms, and a large library.", tag: "Ngày nay, trường có các phòng học được trang bị đầy đủ, hai phòng máy tính hiện đại và một thư viện lớn.", hint: "Đặt trạng từ thời gian hiện tại dấu mốc 'Today' ở đầu câu câu + Đại từ chủ ngữ thế thế 'it' + Động từ hành vi 'has' + Liệt kê các tân ngữ tăng dần kết thúc bằng liên từ 'and'."},
+        {ex: "Exercise 18: Paragraph Sentence Reordering", q: "16. Students / study / outdoor activities / at this school / many different subjects / and join / a lot of/.", opts: ["Students at this school study many different subjects and join a lot of outdoor activities.", "Students study many different subjects at this school and join a lot of outdoor activities.", "Students at this school study and join a lot of different subjects and outdoor activities.", "At this school students study many different subjects and join a lot of outdoor activities."], ans: "Students at this school study many different subjects and join a lot of outdoor activities.", tag: "Học sinh tại ngôi trường này được học nhiều môn học khác nhau và tham gia rất nhiều hoạt động ngoài trời.", hint: "Cụm chủ ngữ đầy đủ chứa giới từ làm rõ đối tượng: 'Students at this school'. Hai hành động song hành chia đồng thì hiện tại đơn kết nối qua 'and': 'study... and join...'"},
+        {ex: "Exercise 18: Paragraph Sentence Reordering", q: "17. extra courses /They also / money management / take / such as painting, dancing / and /.", opts: ["They also take extra courses such as painting, dancing and money management.", "They take also extra courses such as painting, dancing and money management.", "They also take extra courses such as money management, painting and dancing.", "Extra courses such as painting, dancing and money management they also take."], ans: "They also take extra courses such as painting, dancing and money management.", tag: "Họ cũng tham gia các khóa học ngoại khóa phụ trợ như vẽ tranh, khiêu vũ và quản lý tiền bạc.", hint: "Trạng từ tần suất chỉ sự thêm vào 'also' đứng chèn giữa giữa chủ ngữ và động từ hành động thường: 'They also take'. Từ chỉ ví dụ 'such as' đặt trước chuỗi liệt kê."},
+        {ex: "Exercise 18: Paragraph Sentence Reordering", q: "18. because schoolmates / They are / supportive / are friendly / and / happy/ teachers are /.", opts: ["They are happy because schoolmates are friendly and teachers are supportive.", "They are happy because teachers are friendly and schoolmates are supportive.", "Because schoolmates are friendly and teachers are supportive they are happy.", "They are friendly and supportive because schoolmates and teachers are happy."], ans: "They are happy because schoolmates are friendly and teachers are supportive.", tag: "Họ cảm thấy hạnh phúc vì bạn học rất thân thiện và các giáo viên thì luôn hỗ trợ nhiệt tình.", hint: "Mệnh đề kết quả đứng trước liên từ: 'They are happy'. Mệnh đề chỉ nguyên nhân đứng sau 'because' kết hợp cấu trúc song hành của tính từ tính chất miêu tả người tương đồng."},
+
+        // Exercise 19
+        {ex: "Exercise 19: Sentence Transformation", q: "19. It is a lovely dinner. (Viết lại câu cảm thán bắt đầu bằng cụm từ gợi ý 'What')", opts: ["What a lovely dinner!", "What lovely dinner is it!", "What is a lovely dinner!", "What a dinner lovely!"], ans: "What a lovely dinner!", tag: "Thật là một bữa tối đáng yêu ngon miệng biết bao!", hint: "Áp dụng cấu trúc câu cảm thán danh từ số ít đếm được với What: 'What + a/an + tính từ + danh từ số ít + (!)'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "20. He lives too far away from the school. (Viết lại câu phủ định chứa tính từ 'near')", opts: ["He doesn't live near the school.", "He lives not near the school.", "He isn't live near the school.", "He doesn't live nearby the school."], ans: "He doesn't live near the school.", tag: "Anh ấy không sống ở gần trường học.", hint: "Trái nghĩa với cụm từ 'live far away from' (sống quá xa khỏi đâu) là hình thái phủ định 'not live near' (không sống gần). Sử dụng trợ động từ phủ định hiện tại đơn 'doesn't live'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "21. Long is a very good swimmer. (Viết lại câu sử dụng trạng từ chỉ cách thức 'well')", opts: ["Long swims very well.", "Long is swim very well.", "Long swims very good.", "Long swim very well."], ans: "Long swims very well.", tag: "Long bơi lội vô cùng giỏi.", hint: "Biến đổi cấu trúc câu cụm danh từ 'tobe + a + tính từ + danh từ chỉ người hành động' chuyển thành cụm động từ tương đương: 'động từ thường (chia ngôi số ít thêm s) + trạng từ cách thức (well)'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "22. My brother cycles slowly. (Viết lại câu sử dụng cấu trúc cụm danh từ kết thúc bằng 'cyclist')", opts: ["My brother is a slow cyclist.", "My brother is a slowly cyclist.", "My brother is cyclist slowly.", "My brother is slow cyclist."], ans: "My brother is a slow cyclist.", tag: "Anh trai tôi là một người đi xe đạp khá chậm rãi.", hint: "Chuyển cấu trúc động từ thường bổ nghĩa bằng trạng từ 'cycles slowly' sang cấu trúc tương đương danh từ: 'tobe + a + tính từ (slow) + danh từ chỉ người (cyclist)'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "23. Mr. Cuong plays tennis very well. (Viết lại câu sử dụng tính từ bổ trợ 'good')", opts: ["Mr. Cuong is a good tennis player.", "Mr. Cuong plays tennis very good.", "Mr. Cuong is a tennis player good.", "Mr. Cuong is good tennis player."], ans: "Mr. Cuong is a good tennis player.", tag: "Ông Cường là một người chơi quần vợt rất giỏi.", hint: "Chuyển cụm động từ hành động thường kèm trạng từ 'plays... very well' thành cụm danh từ tính chất tương tự: 'tobe + a + tính từ (good) + danh từ ghép chỉ vận động viên'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "24. Mrs. Chi is a quick typist. (Viết lại câu sử dụng trạng từ thể cách kết thúc đuôi '-ly')", opts: ["Mrs. Chi types quickly.", "Mrs. Chi is types quickly.", "Mrs. Chi types quick.", "Mrs. Chi quick types."], ans: "Mrs. Chi types quickly.", tag: "Bà Chi đánh máy văn bản rất nhanh nhẹn.", hint: "Chuyển đổi cụm từ tính từ đứng trước danh từ 'a quick typist' thành động từ thường được bổ nghĩa trực tiếp bằng trạng từ cách thức thêm đuôi -ly: 'types quickly'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "25. Thoa sings smoothly. (Viết lại câu thành cụm danh từ chứa tính từ 'smooth')", opts: ["Thoa is a smooth singer.", "Thoa is a smoothly singer.", "Thoa is smooth singer.", "Thoa sings a smooth song."], ans: "Thoa is a smooth singer.", tag: "Thoa là một ca sĩ có giọng hát mượt mà truyền cảm.", hint: "Biến đổi cấu trúc trạng từ bổ nghĩa động từ thường 'sings smoothly' sang cấu trúc tính từ đứng trước danh từ chỉ người: 'tobe + a + tính từ (smooth) + danh từ chỉ nghề nghiệp (singer)'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "26. Miss. An is a fast runner. (Viết lại câu sử dụng từ đóng vai trò trạng từ cách thức 'fast')", opts: ["Miss. An runs fast.", "Miss. An runs fastly.", "Miss. An is run fast.", "Miss. An fast runs."], ans: "Miss. An runs fast.", tag: "Cô An chạy bộ rất nhanh.", hint: "Từ 'fast' vừa là tính từ vừa là trạng từ đặc biệt bất quy tắc không thêm đuôi -ly. Cấu trúc chuyển đổi tương đương hành động: 'runs fast'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "27. Mr. Hung is a safe driver. (Viết lại câu sử dụng trạng từ chỉ cách thức an toàn 'safely')", opts: ["Mr. Hung drives safely.", "Mr. Hung drives safe.", "Mr. Hung is drive safely.", "Mr. Hung safely drives."], ans: "Mr. Hung drives safely.", tag: "Ông Hùng lái xe ô tô vô cùng an toàn.", hint: "Chuyển cụm danh từ 'a safe driver' sang cấu trúc động từ thường bổ nghĩa bằng trạng từ cách thức có cấu tạo thêm đuôi -ly: 'drives safely'."},
+        {ex: "Exercise 19: Sentence Transformation", q: "28. Minh's sister dances marvelously. (Viết lại câu sử dụng tính từ gốc 'marvelous')", opts: ["Minh's sister is a marvelous dancer.", "Minh's sister is a marvelously dancer.", "Minh's sister is marvelous dancer.", "Minh's sister is a dancer marvelous."], ans: "Minh's sister is a marvelous dancer.", tag: "Chị gái của Minh là một vũ công tuyệt vời.", hint: "Chuyển cấu trúc trạng từ bổ nghĩa động từ thường 'dances marvelously' sang cụm danh từ chỉ tính chất người: 'tobe + a + tính từ (marvelous) + danh từ chỉ người (dancer)'."},
+
+        // Exercise 20
+        {ex: "Exercise 20: Paragraph Arrangement (ABCD)", q: "29. Hãy chọn thứ tự sắp xếp các câu đúng logic nhất để tạo thành bức thư hoàn chỉnh gửi Mai.", opts: ["A. d-c-e-b-a-f-g", "B. c-d-b-e-a-f-g", "C. d-c-b-e-a-f-g", "D. d-e-c-b-f-a-g"], ans: "C. d-c-b-e-a-f-g", tag: "Trình tự thư logic: d (kể về việc đi thăm trường tiểu học cũ tuần trước) -> c (cảm xúc vui mừng khi gặp lại thầy cô) -> b (nhận xét trường to hơn) -> e (liệt kê phòng thư viện mới) -> a (nhắc tới người bạn Tom vẫn đang học ở đó) -> f (Tom dẫn đi xem lớp học có TV lớn) -> g (chốt kết luận một ngày hạnh phúc).", hint: "Mở đầu thư luôn là câu giới thiệu sự kiện bao quát mốc thời gian diễn ra hành động làm tiền đề mở bài (d), sau đó đi sâu vào cảm xúc (c) rồi đến tả chi tiết cảnh vật phát triển mạch văn (b-e-a-f) và kết thúc bằng câu cảm nghĩ chung (g)."},
+        {ex: "Exercise 20: Paragraph Arrangement (ABCD)", q: "30. Hãy sắp xếp các câu (a-e) thành đoạn văn học thuật nghị luận logic về tài nguyên học tập.", opts: ["A. c-b-e-a-d", "B. c-e-a-b-d", "C. e-a-c-b-d", "D. c-e-b-a-d"], ans: "B. c-e-a-b-d", tag: "Trình tự đoạn văn logic: c (khẳng định tài nguyên học tập là công cụ thiết yếu để thành công - Câu chủ đề) -> e (đưa luận điểm internet là tài nguyên tốt nhất ngày nay) -> a (nêu ví dụ chứng minh việc tra cứu toán học hoặc video lịch sử nhanh chóng trên mạng) -> b (nêu luận điểm bổ sung về tầm quan trọng không thể thay thế của giáo viên và sách giáo khoa truyền thống) -> d (kết luận việc kết hợp truyền thống và hiện đại trực tuyến là phương pháp tối ưu hiệu quả nhất).", hint: "Quy tắc viết đoạn văn tổng phân hợp: Câu chủ đề tổng quát giới thiệu định nghĩa đối tượng luôn đứng đầu tiên (c), tiếp theo là triển khai các khía cạnh luận điểm hỗ trợ kèm ví dụ chứng minh minh họa (e-a-b) và câu kết luận tóm lược đưa ra giải pháp chứa liên từ hệ quả đứng cuối (d)."},
+        {ex: "Exercise 20: Paragraph Arrangement (ABCD)", q: "31. Hãy chọn thứ tự sắp xếp đúng để cấu tạo đoạn văn kể về hoạt động làm áp phích môi trường học đường.", opts: ["A. a – c – b – d", "B. a – b – c – d", "C. b – a – c – d", "D. a – c – d – b"], ans: "A. a – c – b – d", tag: "Trình tự logic đoạn văn: a (tuần trước làm việc nhóm làm áp phích môi trường) -> c (chi tiết về sản phẩm nhóm tôi làm tấm áp phích to lớn rực rỡ đầy hình ảnh) -> b (hoạt động thuyết trình sản phẩm trước lớp vào ngày thứ Sáu) -> d (cảm xúc kết luận mọi người đều thích thú học hỏi lẫn nhau).", hint: "Mạch văn phát triển theo trình tự thời gian và diễn biến hành động hợp lý: Nêu bối cảnh tuần trước phân chia nhóm làm việc (a) ➔ Mô tả sản phẩm cụ thể của nhóm mình sau khi hoàn thành (c) ➔ Hành động thuyết trình báo cáo kết quả cuối tuần thứ Sáu (b) ➔ Cảm xúc đọng lại của cả lớp (d)."},
+        {ex: "Exercise 20: Paragraph Arrangement (ABCD)", q: "32. Hãy chọn thứ tự đúng để cấu tạo đoạn văn kể về trải nghiệm học tập trực tuyến trực tuyến mùa dịch bệnh.", opts: ["A. b – c – a – d", "B. b – a – c – d", "C. b – c – d – a", "D. b – d – a – c"], ans: "C. b – c – d – a", tag: "Trình tự logic đoạn văn: b (nêu bối cảnh phải học trực tuyến vài tháng trong đại dịch) -> c (học cách sử dụng các ứng dụng công nghệ mới như Zoom và Google Classroom) -> d (nỗ lực cố gắng theo sát bài học và hoàn thành bài tập đúng hạn) -> a (nêu khía cạnh hạn chế thông qua liên từ nghịch đối: Tuy nhiên, thỉnh thoảng tôi thấy khó tập trung khi ở nhà).", hint: "Đoạn văn tự sự triển khai logic: Giới thiệu hoàn cảnh bối cảnh lịch sử diễn ra câu chuyện (b) ➔ Công cụ phương tiện kỹ năng tiếp cận áp dụng vào thực tế (c) ➔ Ý thức thái độ hành động phản ứng lại hoàn cảnh (d) ➔ Câu kết luận chia sẻ khó khăn thực tế mở rộng góc nhìn đứng sau liên từ tương phản nghịch đối 'However' (a)."},
+        {ex: "Exercise 20: Paragraph Arrangement (ABCD)", q: "33. Hãy sắp xếp các câu thành đoạn văn ngắn kể về kỷ niệm làm quen người bạn mới ngày đầu tiên đi học.", opts: ["A. c – a – b – d", "B. a – c – b – d", "C. b – a – c – d", "D. c – a – d – b"], ans: "A. c – a – b – d", tag: "Trình tự logic đoạn văn: c (ngày đầu tiên đi học thấy một cô bạn trông có vẻ khá rụt rè nhút nhát) -> a (tôi chủ động đến giới thiệu bản thân và xin ngồi cạnh cô ấy) -> b (cô ấy mỉm cười đồng ý và chúng tôi trò chuyện vui vẻ trong giờ giải lao) -> d (kết quả hiện tại: bây giờ chúng tôi đã là bạn thân của nhau và cùng nhau đi bộ đến trường mỗi ngày).", hint: "Mạch văn kể chuyện tuân thủ quy luật nhân quả và dòng thời gian: Phát hiện đối tượng trong ngày đầu tiên bối cảnh (c) ➔ Hành động chủ động tiếp cận làm quen của bản thân (a) ➔ Phản ứng đáp lại tích cực của đối tượng tạo ra cuộc hội thoại (b) ➔ Kết quả tốt đẹp ở mốc thời gian hiện tại 'Now' đứng làm câu chốt hạ cuối cùng (d)."},
+
+        // Exercise 21
+        {ex: "Exercise 21: Text Completion", q: "34a. Chọn thứ tự câu đúng (a-c) để điền vào chỗ trống đầu tiên trong văn bản kể về Ngày trồng cây của nhà trường.", opts: ["A. c - a – b", "B. a - c – b", "C. b - c – a", "D. c - b - a"], ans: "C. b - c – a", tag: "Trình tự lô-gich điền đoạn văn: b (Giáo viên giải thích rằng trồng cây giúp không khí trong lành và làm trường đẹp hơn) -> c (Chúng tôi dùng xẻng đào hố và tưới nhiều nước cho cây mới) -> a (Đó là một công việc vất vả khó khăn, nhưng cũng rất vui vẻ!).", hint: "Mạch ý diễn biến hành động hợp lý sau khi thông báo sự kiện: Nhận thức lý thuyết giáo dục từ thầy cô kích hoạt hành động (b) ➔ Triển khai công việc dùng dụng cụ đào đất tưới nước thực tế (c) ➔ Đánh giá tính chất tổng kết cảm xúc của hành động đó (a)."},
+        {ex: "Exercise 21: Text Completion", q: "34b. Chọn câu kết thúc (ENDING) văn bản trên một cách phù hợp và ý nghĩa nhất.", opts: ["A. Everyone went home feeling tired after the event.", "B. We must remember to water the trees every day so they can survive.", "C. The headmaster gave a speech about the importance of being kind to nature.", "D. The day was successful because we all learned about protecting the environment."], ans: "D. The day was successful because we all learned about protecting the environment.", tag: "Lựa chọn câu kết phù hợp nhất: 'Ngày hôm đó đã diễn ra vô cùng thành công tốt đẹp vì tất cả chúng tôi đều học được bài học sâu sắc về việc bảo vệ môi trường xung quanh'.", hint: "Câu kết của một đoạn văn tường thuật hoạt động giáo dục học đường xuất sắc nhất là câu đúc kết được giá trị bài học nhận thức cốt lõi mang tính tích cực lâu dài cho học sinh, tương đồng mạch văn tổng thể phía trước."},
+        {ex: "Exercise 21: Text Completion", q: "35a. Chọn câu chủ đề mở đầu (TOPIC SENTENCE) phù hợp nhất cho đoạn văn miêu tả về một ngày học tập bình thường của học sinh.", opts: ["A. Spending time with friends and learning new things are the best parts of the day.", "B. School days are usually busy but also full of enjoyable activities and learning.", "C. A typical day at school involves going to six different classes and playing games.", "D. The school day begins with chatting with friends and ends with Science or History."], ans: "B. School days are usually busy but also full of enjoyable activities and learning.", tag: "Câu chủ đề mở bài xuất sắc nhất: 'Những ngày đi học ở trường thường rất bận rộn nhưng cũng chứa đựng đầy rẫy những hoạt động thú vị bổ ích và việc học tập lý thú'.", hint: "Câu chủ đề đạt tiêu chuẩn học thuật phải bao quát được toàn bộ luận điểm tính chất của các câu diễn biến phía sau (vừa bận rộn nhiều môn học học tập, vừa chứa nhiều hoạt động vui chơi giải trí giờ giải lao ăn trưa)."},
+        {ex: "Exercise 21: Text Completion", q: "35b. Hãy sắp xếp các câu (a-c) theo trật tự logic đúng đắn nhất để hoàn thiện nội dung phần thân đoạn văn miêu tả ngày đi học trên.", opts: ["A. a-b-c", "B. c-a-b", "C. a-c-b", "D. c-b-a"], ans: "B. c-a-b", tag: "Trình tự phân tích phân bổ mạch ý thời gian: c (Khái quát thời khóa biểu chính bao gồm các lớp học và giờ nghỉ trưa dài để đá bóng) -> a (Chi tiết buổi sáng: Họ có bốn tiết học vào buổi sáng, bao gồm cả môn học yêu thích nhất) -> b (Chi tiết buổi chiều: Buổi chiều bao gồm thêm hai tiết học nữa, chẳng hạn như Khoa học hoặc Lịch sử).", hint: "Triển khai mạch văn theo mô hình sơ đồ thời gian tuyến tính logic: Đưa ra thông tin tổng quan về khung lịch trình sinh hoạt chung cả ngày (c) ➔ Liệt kê chi tiết hoạt động các tiết học diễn ra cụ thể vào buổi sáng (a) ➔ Kết thúc bằng chuỗi bài học bổ sung diễn ra tiếp theo vào buổi chiều (b)."}
+    ];
+
+    // Thuật toán xáo trộn vị trí đáp án ngẫu nhiên để ngăn học sinh học vẹt đáp án
+    function xaoTronMang(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Biên dịch dữ liệu thô sang cấu trúc đối tượng học tập tương tác chuẩn mực
+    const quizCompiledData = questionsRawData.map((item, index) => {
+        let optionsShuffled = [...item.opts];
+        // Chỉ xáo trộn đối với các câu hỏi do hệ thống tự chế phương án, giữ nguyên thứ tự với câu đã có sẵn nhãn A-B-C-D cấu trúc đoạn
+        if(!item.opts[0].startsWith("A.") && !item.opts[0].startsWith("B.")) {
+            xaoTronMang(optionsShuffled);
+        }
+
+        let step1 = `<strong>Bước 1: Dịch nghĩa câu hỏi & nội dung gốc:</strong><br><em>"${item.q}"</em><br>➔ Ý nghĩa câu trọn vẹn: <strong>${item.tag}</strong>`;
+        let step2 = `<br><strong>Bước 2: Phân tích hiển thị nghĩa của các lựa chọn phương án:</strong><br>`;
+        optionsShuffled.forEach((opt, idx) => {
+            let letter = String.fromCharCode(65 + idx);
+            let status = opt === item.ans ? " (Đáp án chính xác)" : " (Phương án nhiễu)";
+            step2 += `- Lựa chọn ${letter}. <strong>${opt}</strong>${status}<br>`;
+        });
+        let step3 = `<br><strong>Bước 3: Tại sao đáp án này là đúng?</strong><br>Lựa chọn phương án <strong>"${item.ans}"</strong> hoàn toàn chính xác do thỏa mãn trực tiếp quy luật ngữ pháp và tính liên kết logic: ${item.hint}`;
+        let step4 = `<br><strong>Bước 4: Tại sao 3 đáp án còn lại SAI?</strong><br>Các phương án nhiễu còn lại bị loại bỏ do sắp xếp sai trật tự từ tính chất, thiếu thành phần cấu tạo câu mệnh đề, hoặc vi phạm nghiêm trọng mạch logic tự sự thời gian của văn bản đoạn nghị luận hành động.`;
+
+        return {
+            id: index + 1,
+            exerciseName: item.ex,
+            questionText: item.q,
+            options: optionsShuffled,
+            correctIndex: optionsShuffled.indexOf(item.ans),
+            explanationHTML: `${step1}<br>${step2}${step3}<br>${step4}`
+        };
+    });
+
+    // Hệ thống tạo tần số âm thanh phản hồi thông minh sử dụng Web Audio API trực tiếp
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    function playSoundFeedback(status) {
+        if (audioContext.state === 'suspended') audioContext.resume();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        if (status === 'correct') {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+            oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.08); // G5
+            gainNode.gain.setValueAtTime(0.25, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.35);
+            oscillator.start(); oscillator.stop(audioContext.currentTime + 0.35);
+            confetti({ particleCount: 50, spread: 45, origin: { y: 0.85 } });
+        } else {
+            oscillator.type = 'triangle';
+            oscillator.frequency.setValueAtTime(140, audioContext.currentTime);
+            oscillator.frequency.linearRampToValueAtTime(70, audioContext.currentTime + 0.35);
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.35);
+            oscillator.start(); oscillator.stop(audioContext.currentTime + 0.35);
+        }
+    }
+
+    let currentScore = 0;
+    const answeredTracker = new Set();
+
+    function initQuizApp() {
+        const zone = document.getElementById('quiz-load-zone');
+        let activeExercise = "";
+
+        quizCompiledData.forEach((q, index) => {
+            if (q.exerciseName !== activeExercise) {
+                activeExercise = q.exerciseName;
+                const titleBlock = document.createElement('div');
+                titleBlock.className = 'exercise-header';
+                titleBlock.innerText = activeExercise;
+                zone.appendChild(titleBlock);
+            }
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            const optionLetters = ['A', 'B', 'C', 'D'];
+
+            card.innerHTML = `
+                <div class="question-text">Câu ${index + 1}: ${q.questionText}</div>
+                <div class="options-layout" id="box-${q.id}">
+                    ${q.options.map((opt, i) => `
+                        <button class="btn-opt" onclick="clickVerifyAnswer(${q.id}, ${i}, this)">${optionLetters[i]}. ${opt}</button>
+                    `).join('')}
+                </div>
+                <div class="explanation-panel" id="panel-${q.id}">
+                    <strong style="color: #2e7d32; font-size: 1.1em;">🌿 BẢNG GIẢI THÍCH NGỮ PHÁP 4 BƯỚC CHUYÊN SÂU:</strong><br><br>${q.explanationHTML}
+                </div>
+            `;
+            zone.appendChild(card);
+        });
+    }
+
+    window.clickVerifyAnswer = function(qId, selectedIdx, btn) {
+        if (answeredTracker.has(qId)) return;
+        answeredTracker.add(qId);
+
+        const q = quizCompiledData.find(item => item.id === qId);
+        const box = document.getElementById(`box-${qId}`);
+        const buttons = box.getElementsByTagName('button');
+        const panel = document.getElementById(`panel-${qId}`);
+
+        if (selectedIdx === q.correctIndex) {
+            btn.classList.add('correct');
+            playSoundFeedback('correct');
+            currentScore++;
+        } else {
+            btn.classList.add('wrong');
+            buttons[q.correctIndex].classList.add('correct');
+            playSoundFeedback('wrong');
+        }
+
+        panel.style.display = 'block';
+    }
+
+    window.nopBaiVaChamDiem = function() {
+        const overlay = document.getElementById('result-overlay');
+        const scoreDisplay = document.getElementById('txt-diem');
+        const commentDisplay = document.getElementById('txt-nhan-xet');
+        const performancePercentage = (currentScore / quizCompiledData.length) * 100;
+
+        scoreDisplay.innerText = `Điểm số của con: ${currentScore} / ${quizCompiledData.length} câu đúng`;
+
+        if (performancePercentage < 50) {
+            commentDisplay.innerText = "Ms Lê Hằng nhắn nhủ: “Điểm lần này chưa cao lắm, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!”";
+        } else if (performancePercentage <= 85) {
+            commentDisplay.innerText = "Ms Lê Hằng nhắn nhủ: “Con đã có tiến bộ khá ổn rồi, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!”";
+        } else {
+            commentDisplay.innerText = "Ms Lê Hằng nhắn nhủ: “Làm tốt lắm, con cố gắng rinh điểm 10 ở lần sau nha!”";
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.4 } });
+        }
+
+        overlay.style.display = 'flex';
+    }
+
+    // Khởi chạy ứng dụng học tập tương tác tức thì
+    initQuizApp();
+</script>
+</body>
+</html>
